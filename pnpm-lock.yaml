@@ -20,6 +20,7 @@ specifiers:
   '@typescript-eslint/parser': ^6.0.0
   class-transformer: ^0.5.1
   class-validator: ^0.14.0
+  dotenv: ^16.3.1
   eslint: ^8.42.0
   eslint-config-prettier: ^9.0.0
   eslint-plugin-prettier: ^5.0.0
@@ -47,6 +48,7 @@ dependencies:
   '@nestjs/platform-express': 10.2.7_pyni7wzdujkbvmfeegxedz3mmy
   class-transformer: 0.5.1
   class-validator: 0.14.0
+  dotenv: 16.3.1
   passport: 0.6.0
   passport-jwt: 4.0.1
   reflect-metadata: 0.1.13

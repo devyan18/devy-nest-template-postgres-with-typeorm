@@ -7,6 +7,7 @@ import { RegisterAuthDto } from './dto/register-auth-dto';
 import { LoginAuthDto } from './dto/login-auth-dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 type SignInResponse = {
   access_token: string;
@@ -15,6 +16,7 @@ type SignInResponse = {
 @Injectable()
 export class AuthService {
   constructor(
+    private configService: ConfigService,
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
@@ -26,31 +28,27 @@ export class AuthService {
     }
     const payload = { id: user.id };
     return {
-      access_token: await this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+      }),
     };
   }
 
-  async signUp({
-    email,
-    password,
-    username,
-  }: RegisterAuthDto): Promise<SignInResponse> {
-    const user = await this.usersService.findByEmail(email);
+  async signUp(registerUserDto: RegisterAuthDto): Promise<SignInResponse> {
+    const user = await this.usersService.findByEmail(registerUserDto.email);
 
     if (user) {
       throw new BadRequestException('Email already exists');
     }
 
-    const newUser = await this.usersService.create({
-      email,
-      password,
-      username,
-    });
+    const newUser = await this.usersService.create(registerUserDto);
 
     const payload = { id: newUser.id };
 
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+      }),
     };
   }
 }
