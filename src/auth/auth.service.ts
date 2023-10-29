@@ -8,6 +8,7 @@ import { LoginAuthDto } from './dto/login-auth-dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import * as bcrypt from 'bcrypt';
 
 type SignInResponse = {
   access_token: string;
@@ -23,9 +24,17 @@ export class AuthService {
 
   async signIn({ email, password }: LoginAuthDto): Promise<SignInResponse> {
     const user = await this.usersService.findByEmail(email);
-    if (user?.password !== password) {
-      throw new UnauthorizedException();
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
     }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
     const payload = { id: user.id };
     return {
       access_token: this.jwtService.sign(payload, {
