@@ -36,3 +36,5 @@ lerna-debug.log*
 
 # ENVIROMENT VARS
 .env
+
+# /postgres-data
