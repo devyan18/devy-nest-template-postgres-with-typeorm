@@ -1,20 +1,25 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import * as bcrypt from "bcrypt";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column('text', {
+  @Column("text", {
     unique: true,
   })
   email: string;
 
-  @Column('text')
+  @Column("text")
   password: string;
 
-  @Column('text')
+  @Column("text")
   username: string;
 
   // hash password before inserting into database

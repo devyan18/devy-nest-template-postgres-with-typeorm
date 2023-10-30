@@ -1,9 +1,12 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  Injectable,
+  InternalServerErrorException,
+} from "@nestjs/common";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { User } from "./entities/user.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class UsersService {
@@ -18,7 +21,7 @@ export class UsersService {
       return this.userRepository.save(newUser);
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error creating user');
+      throw new InternalServerErrorException("Error creating user");
     }
   }
 
@@ -27,7 +30,7 @@ export class UsersService {
       return await this.userRepository.find();
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error finding users');
+      throw new InternalServerErrorException("Error finding users");
     }
   }
 
@@ -36,7 +39,7 @@ export class UsersService {
       return this.userRepository.findOne({ where: { id } });
     } catch (e) {
       console.log(e);
-      throw new InternalServerErrorException('Error finding user');
+      throw new InternalServerErrorException("Error finding user");
     }
   }
 
@@ -45,7 +48,7 @@ export class UsersService {
       return this.userRepository.update({ id }, updateUserDto);
     } catch (e) {
       console.log(e);
-      throw new InternalServerErrorException('Error updating user');
+      throw new InternalServerErrorException("Error updating user");
     }
   }
 
@@ -54,7 +57,7 @@ export class UsersService {
       return this.userRepository.delete({ id });
     } catch (e) {
       console.log(e);
-      throw new InternalServerErrorException('Error deleting user');
+      throw new InternalServerErrorException("Error deleting user");
     }
   }
 
@@ -63,7 +66,7 @@ export class UsersService {
       return this.userRepository.findOne({ where: { email } });
     } catch (error) {
       console.log(error);
-      throw new InternalServerErrorException('Error finding user');
+      throw new InternalServerErrorException("Error finding user");
     }
   }
 }
